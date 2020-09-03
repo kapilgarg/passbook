@@ -106,21 +106,3 @@ def create_message_with_attachment(
   message.attach(msg)
 
   return {'raw': base64.urlsafe_b64encode(message.as_string())}
-
-from string import Template
-template = Template("""
-Date:$date
-Expense for $date
------------------
-$expanse
------------------
-Expanse by category:
-$expanse_by_cat
------------------
-Total Montly expanse so far
-""")
-msg = template.substitute(date=datetime.now().strftime('%Y-%m-%d'),expanse='',expanse_by_cat='')
-
-# if __name__ == "__main__":
-#   message = create_message('me','kapil.garg82@gmail.com','Report:02-09-2020',msg)
-#   send_message(service,'me',message)
