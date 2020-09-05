@@ -42,7 +42,8 @@ def add_sheet(spreadsheet_id, sheet_name):
         request.execute()
     except Exception as ex:
          if ex.content.decode('utf-8').index(f'A sheet with the name \\"{sheet_name}\\" already exists')!= -1:
-            clear_sheet(service, spreadsheet_id, sheet_name)
+            #clear_sheet(spreadsheet_id, sheet_name)
+            pass
 
 def create_spread_sheet(name):
     """
@@ -65,11 +66,11 @@ def clear_sheet(spreadsheet_id, sheet):
     Args:
         spreadsheet_id:string - Id of the spreadsheet
     """
-    range_name = f"{sheet}!A$1:D"
+    range_name = f"{sheet}"
     request = service.spreadsheets().values().clear(spreadsheetId=spreadsheet_id, range=range_name)
     request.execute()
 
-def write_to_sheet(spreadsheet_id, sheet, body):
+def write_to_sheet(spreadsheet_id, sheet, values):
     """
     writes values to a sheet in spreadsheet
     Args:
@@ -77,7 +78,10 @@ def write_to_sheet(spreadsheet_id, sheet, body):
         sheet:string - name of the sheet
         body:list - list of values to be written
     """
-    range_name = f"{sheet}!A1:D1"
+    body = {
+            'values': values
+        }
+    range_name = f"{sheet}"
     service.spreadsheets().values().append(spreadsheetId=spreadsheet_id, range=range_name, valueInputOption="RAW", body=body).execute()
 
 def get_from_sheet(spreadsheet_id, sheet_name):
@@ -88,4 +92,20 @@ def get_from_sheet(spreadsheet_id, sheet_name):
         sheet:string - name of the sheet
     """
     range_name = f"{sheet_name}"
-    return service.spreadsheets().values().get(spreadsheetId=spreadsheet_id, range=range_name).execute()
+    data = service.spreadsheets().values().get(spreadsheetId=spreadsheet_id, range=range_name).execute()
+    return data['values'] if data else None
+
+def de_duplicate(spreadsheet_id, sheet_name):
+    values = get_from_sheet(spreadsheet_id, sheet_name)
+    final_values = []
+    id_map = {}
+    for value in values:
+        if(value[5] not in id_map):
+            id_map[value[5]] = 'true'
+            final_values.append(value)
+    if final_values:
+        clear_sheet(spreadsheet_id, sheet_name)
+        write_to_sheet(spreadsheet_id, sheet_name, final_values)
+    
+
+

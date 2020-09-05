@@ -12,7 +12,7 @@ from config import EMAIL_ADDRESSES
 
 
 service = build('gmail', 'v1', credentials=creds)
-email_addresses = __get_source_addresses(EMAIL_ADDRESSES)
+
 
 def __get_source_addresses(file_path):
     addresses = []
@@ -20,7 +20,9 @@ def __get_source_addresses(file_path):
         addresses = f.readlines()
     return addresses
 
-def get_mails(date_from, date_to):
+email_addresses = EMAIL_ADDRESSES.split(',')
+
+def __get_mails(date_from, date_to):
         """
         tbd
         """
@@ -42,11 +44,16 @@ def get_message(message_id):
     Returns:
         Mime message
     """
-        message = self.service.users().messages().get(userId='me', id=message_id,
-                                                      format='raw').execute()
-        msg_str = base64.urlsafe_b64decode(message['raw'].encode('ASCII'))
-        mime_msg = email.message_from_string(msg_str.decode())
-        return mime_msg
+    message = service.users().messages().get(userId='me', id=message_id,
+                                                    format='raw').execute()
+    msg_str = base64.urlsafe_b64decode(message['raw'].encode('ASCII'))
+    mime_msg = email.message_from_string(msg_str.decode())
+    return mime_msg
+
+def get_mails(date_from, date_to):
+    message_ids = __get_mails(date_from, date_to)
+    mime_messages = {message_id['id']:get_message(message_id['id']) for message_id in message_ids}
+    return mime_messages
 
 def __subject(mime_msg):
         return mime_msg['subject']
@@ -61,7 +68,7 @@ def __body(mime_msg):
     soup = BeautifulSoup(html, 'html.parser')
     text = soup.text
 
-def parse_email(self, mime_msg):
+def parse_email(mime_msg):
     """
     tbd
     """

@@ -14,4 +14,4 @@ def get_sheet_id(name):
     Returns: Id of the spreadsheet
     """
     result = service.files().list(q=f"name='{name}'", pageSize=10, fields="nextPageToken, files(id, name)").execute()
-    return EMPTY_STRING if not result['files'] else result['files'][0]['id']
+    return '' if not result['files'] else result['files'][0]['id']
