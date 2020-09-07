@@ -58,11 +58,14 @@ def generate(spreadsheet_id, sheet_name, date):
     """
     data = __generate_data(spreadsheet_id, sheet_name, date)
 
+    logger.debug(data)
+
     current_day_records = data['current_day_records']
     expense_by_category_daily = data['expense_by_category_daily']
     expense_by_category_monthly = data['expense_by_category_monthly']
 
     #total expense contains only debit
+    expense_for_current_day = ''
     total_expense = sum([float(record[1]) for record in current_day_records if float(record[1]) > 0])
     for record in current_day_records:
         expense_for_current_day = expense_for_current_day + line_record_seller.substitute(amount=record[1], seller=record[2])
