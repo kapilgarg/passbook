@@ -1,1 +1,2 @@
 # passbook
+Passbook is a personal money manager which tracks your expenses using bank notifications on gmail. It parses the mail , extraxts the relevent information and stores that in google sheet and sends a summary email mail for daily expense.
