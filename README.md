@@ -31,6 +31,8 @@ start_date and end_date should belong to same month.
 
 By default start date is the current date and end date is tomorrow's date so that you get current day's expenses. but these can be changed and can be set from command line arguments.
 
+    >> python main.py <email-address>
+
 
 
 
