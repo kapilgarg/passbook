@@ -35,7 +35,8 @@ By default start date is the current date and end date is tomorrow's date so tha
 
 You receive an email like the below -
 
-![expense summary](/assets/images/mail.PNG)
+<img src="/assets/images/mail.PNG" width="35%">
+
 
 
 
