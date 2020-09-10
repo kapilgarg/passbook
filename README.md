@@ -27,7 +27,7 @@ Run Main.py to run the application. It takes 3 parameters
 2. end_date : end date for email to extract the expenses(excluding)
 3. email_recp : email address to which summary email has to be sent
 
-By default start date is the current date and end date in tomorrow's dateso that you get current day's expenses. but these can be changed and can be set from command line arguments.
+By default start date is the current date and end date is tomorrow's date so that you get current day's expenses. but these can be changed and can be set from command line arguments.
 
 
 
