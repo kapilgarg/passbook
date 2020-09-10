@@ -1,0 +1,8 @@
+zomato=food
+swiggy=food
+netflix=entertainment
+decathlonsports=sports
+decathlon=sports
+R P ENTERPRISES=fuel
+myntra=clothing
+stationary=stationary

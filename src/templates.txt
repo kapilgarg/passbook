@@ -1,0 +1,3 @@
+Your Citibank A/c has been (?P<tx_type>.+) with INR (?P<amount>.+) on (?P<date>.+) at (?P<time>.*) received from (?P<seller>.+).
+Thank you for using your Citibank (?P<tx_type>.+) Card (?P<card_nume>.+) for Rs. (?P<amount>.+) at (?P<seller>.+) on (?P<date>[a-zA-Z0-9-/]+).
+Your Citibank A/c has been (?P<tx_type>.+) with INR (?P<amount>.+) on (?P<date>.+) at (?P<time>.*) and account (?P<seller>.+) has been credited.
