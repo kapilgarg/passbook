@@ -2,6 +2,7 @@
 report module
 """
 from string import Template
+from dateutil.parser import parse
 import itertools
 import logging
 import gsheet
@@ -30,9 +31,9 @@ $expense_by_category_monthly
 line_record_seller = Template("INR $amount - $seller \n")
 line_record_category = Template("INR $amount - $category \n")
 
-def __generate_data(spreadsheet_id, sheet_name, date):
+def __generate_data(spreadsheet_id, sheet_name, date_from, date_to):
     records = gsheet.get_from_sheet(spreadsheet_id, sheet_name)
-    current_day_record = [record for record in records if record[0] == date.strftime("%Y-%m-%d")]
+    current_day_record = [record for record in records if date_from <= parse(record[0]) < date_to ]
     current_day_record  = sorted(current_day_record,key=lambda x:x[4])
     group_by_category_daily = itertools.groupby(current_day_record, lambda x:x[4])
 
@@ -52,11 +53,11 @@ def __generate_data(spreadsheet_id, sheet_name, date):
         'expense_by_category_monthly':expense_by_category_monthly
     }
 
-def generate(spreadsheet_id, sheet_name, date):
+def generate(spreadsheet_id, sheet_name, date_from, date_to):
     """
     returns the data to generate email notification
     """
-    data = __generate_data(spreadsheet_id, sheet_name, date)
+    data = __generate_data(spreadsheet_id, sheet_name, date_from, date_to)
 
     logger.debug(data)
 
@@ -73,17 +74,17 @@ def generate(spreadsheet_id, sheet_name, date):
 
     expense_by_category_daily_str = ''
     for category, expense_amount in expense_by_category_daily.items():
-        expense_by_category_daily_str = line_record_category.substitute(amount=expense_amount, category=category)
+        expense_by_category_daily_str = expense_by_category_daily_str + line_record_category.substitute(amount=expense_amount, category=category)
     logger.debug(expense_by_category_daily_str)
 
     expense_by_category_monthly_str = ''
     for category, expense_amount in expense_by_category_monthly.items():
-        expense_by_category_monthly_str = line_record_category.substitute(amount=expense_amount, category=category)
+        expense_by_category_monthly_str = expense_by_category_monthly_str + line_record_category.substitute(amount=expense_amount, category=category)
     logger.debug(expense_by_category_monthly_str)
 
     return mail_template.substitute({
         'total_expense':total_expense,
-        'date':date.strftime("%Y-%m-%d"),
+        'date':date_from.strftime("%Y-%m-%d")+' - '+ date_to.strftime("%Y-%m-%d"),
         'current_day_records':expense_for_current_day,
         'expense_by_category_daily':expense_by_category_daily_str,
         'expense_by_category_monthly':expense_by_category_monthly_str

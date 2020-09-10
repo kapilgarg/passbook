@@ -88,7 +88,7 @@ def main(start_date, end_date, email_recp):
     # Generate Expense report and email it.
     report_date = process_date_from
     expense_report = report.generate(
-        spreadsheet_id, current_sheet_name, report_date)
+        spreadsheet_id, current_sheet_name, process_date_from, process_date_to)
     logger.debug(expense_report)
     send_mail.send_message(
         'Expense report : '+report_date.strftime('%Y-%m-%d'), expense_report, email_recp)
@@ -104,7 +104,10 @@ if __name__ == "__main__":
         help="end date for the expense report")
     arg_parser.add_argument(
         "--email_recp", help="email address for the recipient of expense report")
-    args = arg_parser.parse_args()
+    try:
+        args = arg_parser.parse_args()
+    except Exception as ex:
+        print(ex)
 
     main(args.start_date, 
         args.end_date, 
