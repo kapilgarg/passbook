@@ -97,11 +97,16 @@ def main(start_date, end_date, email_recp):
 if __name__ == "__main__":
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument(
-        "--start_date", help="start date for the expense report")
+        "--start_date",default=datetime.now().strftime("%Y-%m-%d"),
+        help="start date for the expense report")
     arg_parser.add_argument(
-        "--end_date", help="end date for the expense report")
+        "--end_date",default=(datetime.now()+timedelta(days=1)).strftime("%Y-%m-%d"),
+        help="end date for the expense report")
     arg_parser.add_argument(
         "--email_recp", help="email address for the recipient of expense report")
     args = arg_parser.parse_args()
 
-    main(args.start_date, args.end_date, args.email_recp)
+    main(args.start_date, 
+        args.end_date, 
+        args.email_recp)
+

@@ -3,7 +3,7 @@ Passbook is a personal money manager which tracks your expenses using bank notif
 
 ## Pre requisite
 
-This application requires authentication with google hence you need to generate a credential file from google develop console. 
+This application requires authentication with google hence you need to generate a credential file from google developer console. 
 
 Go to https://console.cloud.google.com/ and create a new project. 
 
@@ -16,8 +16,20 @@ Enable following apis for the project
 
 Once project is created successfully, download the file and save it as credentials.json
 
-copy that credential file in working folder along with other files. When you run this application for the first time, it will ask to authenticate with your account and on successful autnentication, generates a pickle.token file in the same folder.
+Copy that credential file in working folder along with other files. When you run this application for the first time, it will ask to authenticate with your account and on successful autnentication, generates a pickle.token file in the same folder.
 Any time permission are changed, this pickle file needs to be generated again. for that just delete the existing file and authenticate again.
+
+## Run application
+
+Run Main.py to run the application. It takes 3 parameters
+
+1. start_date : start date for email to extract the expenses
+2. end_date : end date for email to extract the expenses(excluding)
+3. email_recp : email address to which summary email has to be sent
+
+By default start date is the current date and end date in tomorrow's dateso that you get current day's expenses. but these can be changed and can be set from command line arguments.
+
+
 
 
 

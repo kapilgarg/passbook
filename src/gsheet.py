@@ -93,7 +93,7 @@ def get_from_sheet(spreadsheet_id, sheet_name):
     """
     range_name = f"{sheet_name}"
     data = service.spreadsheets().values().get(spreadsheetId=spreadsheet_id, range=range_name).execute()
-    return data['values'] if data else None
+    return data['values'] if data and 'values' in data else []
 
 def de_duplicate(spreadsheet_id, sheet_name):
     values = get_from_sheet(spreadsheet_id, sheet_name)
