@@ -45,7 +45,7 @@ def main(start_date, end_date, email_recp):
     process_date_from = parse(start_date)
     process_date_to = parse(end_date)
 
-    if process_date_from.month != process_date_to.month:
+    if process_date_from.month != (process_date_to + timedelta(days=-1)).month:
         logger.error('Please enter dates for same month. Exiting...')
         return
 
