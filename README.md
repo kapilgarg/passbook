@@ -34,7 +34,8 @@ By default start date is the current date and end date is tomorrow's date so tha
     >> python main.py --email_recp <email-address>  
 
 Once the script is complete, it creates a google sheet in your google drive by the name 'passbook' if not already there.
-For each month, it adds a sheet and all the expenses are listed there. You can update the category for any expense and that will be reflected in the next report.
+For each month, it adds a sheet and all the expenses are listed there. You can update the category for any expense and that will be reflected in the next report.  
+
 <img src="/assets/images/gsheet.PNG" width="35%">
 
 You receive an email like the below -
