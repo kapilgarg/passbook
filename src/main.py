@@ -26,12 +26,12 @@ logger = logging.getLogger(__name__)
 def __enrich(data, mime_message, message_id):
     data.update({'date': parse(data['date']).strftime("%Y-%m-%d")})
     data.update({'subject': mime_message['subject']})
-    data.update({'category': category.get(data['seller'])})
+    data.update({'category': category.get(data.get('seller') or '')})
 
     data.update({'tx_type': 'debit' if 'debit' in (
         data['tx_type']).lower() else 'credit'})
 
-    data.update({'amount': float(data['amount'])})
+    data.update({'amount': float(data.get('amount').replace(',',''))})
     data.update(
         {'amount': -1*data['amount'] if data['tx_type'] == 'credit' else data['amount']})
     data.update({'id': message_id})
@@ -82,7 +82,7 @@ def main(start_date, end_date, email_recp):
     HEADER = ['date', 'amount', 'seller', 'tx_type', 'category', 'id']
     request = []
     for record in records:
-        expense = [record[name]for name in HEADER]
+        expense = [record.get(name) or '' for name in HEADER]
         request.append(expense)
 
     if request:
