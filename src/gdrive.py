@@ -10,7 +10,7 @@ def get_sheet_id(name):
     """
     returns the Id of the given spread sheet
     Args:
-        name:string - name of the spreadsheet
+        `name`:string - name of the spreadsheet
     Returns: Id of the spreadsheet
     """
     result = service.files().list(q=f"name='{name}'", pageSize=10, fields="nextPageToken, files(id, name)").execute()
