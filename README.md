@@ -10,9 +10,11 @@ Go to https://console.cloud.google.com/ and create a new project.
 Select project type as desktop.
 
 Enable following apis for the project
-1. gmail
-2. google sheet
-3. google drive
+> gmail
+
+> google sheet
+
+> google drive
 
 Once project is created successfully, download the file and save it as credentials.json
 
